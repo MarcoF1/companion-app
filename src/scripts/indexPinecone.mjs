@@ -13,8 +13,8 @@ dotenv.config({ path: `.env.local` });
 const fileNames = fs.readdirSync("companions");
 const splitter = new CharacterTextSplitter({
   separator: " ",
-  chunkSize: 200,
-  chunkOverlap: 50, //TODO: adjust both chunk size and chunk overlap later
+  chunkSize: 100,
+  chunkOverlap: 20, //TODO: adjust both chunk size and chunk overlap later
 });
 
 const langchainDocs = await Promise.all(
@@ -24,6 +24,7 @@ const langchainDocs = await Promise.all(
       const fileContent = fs.readFileSync(filePath, "utf8");
       // get the last section in the doc for background info
       const lastSection = fileContent.split("###ENDSEEDCHAT###").slice(-1)[0];
+      console.log(lastSection);
       const splitDocs = await splitter.createDocuments([lastSection]);
       return splitDocs.map((doc) => {
         return new Document({

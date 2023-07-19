@@ -94,6 +94,7 @@ export async function POST(req: Request) {
     recentChatHistory,
     companionFileName
   );
+  console.log(similarDocs);
 
   let relevantHistory = "";
   if (!!similarDocs && similarDocs.length !== 0) {
@@ -107,6 +108,7 @@ export async function POST(req: Request) {
     modelName: "gpt-3.5-turbo-16k",
     openAIApiKey: process.env.OPENAI_API_KEY,
     callbackManager: CallbackManager.fromHandlers(handlers),
+    // temperature: 0.5,
   });
   model.verbose = true;
 
